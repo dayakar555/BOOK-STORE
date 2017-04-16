@@ -1,3 +1,28 @@
-<h1>
+<h1 (click)="openSnackBar()">
   {{title}}
 </h1>
+
+<form name="Book">
+  <md-input-container>
+    <input mdInput [(ngModel)]="Book.name" name="BookName" placeholder="Book name" (keyup.enter)="saveBook()" (keydown.esc)="clear()">
+  </md-input-container>
+  <md-input-container>
+    <input mdInput [(ngModel)]="Book.author" name="BookAuthor" placeholder="Book author" (keyup.enter)="saveBook()" (keydown.esc)="clear()">
+  </md-input-container>
+  <md-input-container>
+    <input mdInput [(ngModel)]="Book.color" name="BookColor" placeholder="Book color" (keyup.enter)="saveBook()" (keydown.tab)="randomColor()" (keydown.esc)="clear()">
+  </md-input-container>
+  <button md-fab (click)="saveBook()"><md-icon>check</md-icon></button>
+</form>
+
+<table>
+  <tr *ngFor="let book of books | async" [ngStyle]="{'background-color': book.color, 'color':'White' ,  'font-weight': 'bold'}"
+    (click)="viewSelected(book)">
+    <td>{{book.name}}</td>
+    <td>{{book.author}}</td>
+    <td>{{book.createdOn | date:"fullDate"}}</td>
+    <td>{{book.editedOn}}</td>
+
+    <td><button md-mini-fab (click)="deleteBook(book)"><md-icon>delete</md-icon></button> </td>
+  </tr>
+</table>
